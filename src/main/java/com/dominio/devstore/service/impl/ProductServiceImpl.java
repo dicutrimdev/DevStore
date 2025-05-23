@@ -33,8 +33,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public ProductDto insert(ProductDto dto) {
         var product = ProductMapper.fromDtoToEntity(dto);
+        return ProductMapper.fromEntityToDto(productRepository.save(product));
+    }
+
+    @Override
+    @Transactional
+    public ProductDto update(Integer id, ProductDto dto) {
+        var product = findProductByIdOrThrow(id);
+        ProductMapper.updateEntityFromDto(product, dto);
         return ProductMapper.fromEntityToDto(productRepository.save(product));
     }
 

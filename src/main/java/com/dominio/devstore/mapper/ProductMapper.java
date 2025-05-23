@@ -26,6 +26,20 @@ public class ProductMapper {
                 .build();
     }
 
+    public static void updateEntityFromDto(Product product, ProductDto dto) {
+        if (dto.getName() != null)
+            product.setName(dto.getName());
+
+        if (dto.getDescription() != null)
+            product.setDescription(dto.getDescription());
+
+        if (dto.getPrice() != null)
+            product.setPrice(dto.getPrice());
+
+        if (dto.getImg_url() != null)
+            product.setImg_url(dto.getImg_url());
+    }
+
     public static Page<ProductDto> fromEntityListToDtoList(Page<Product> products) {
         return products.map(ProductMapper::fromEntityToDto);
     }

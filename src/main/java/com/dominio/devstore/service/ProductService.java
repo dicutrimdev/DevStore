@@ -11,4 +11,6 @@ public interface ProductService {
     Page<ProductDto> findAll(Pageable pageable);
 
     ProductDto insert(ProductDto dto);
+
+    ProductDto update(Integer id, ProductDto dto);
 }
