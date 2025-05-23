@@ -16,6 +16,16 @@ public class ProductMapper {
                 .build();
     }
 
+    public static Product fromDtoToEntity(ProductDto dto) {
+        return Product.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .description(dto.getDescription())
+                .price(dto.getPrice())
+                .img_url(dto.getImg_url())
+                .build();
+    }
+
     public static Page<ProductDto> fromEntityListToDtoList(Page<Product> products) {
         return products.map(ProductMapper::fromEntityToDto);
     }

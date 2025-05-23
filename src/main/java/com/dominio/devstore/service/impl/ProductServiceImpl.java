@@ -12,8 +12,6 @@ import com.dominio.devstore.repositories.ProductRepository;
 import org.springframework.transaction.annotation.Transactional;
 import com.dominio.devstore.exceptions.ResourceNotFoundException;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -32,6 +30,12 @@ public class ProductServiceImpl implements ProductService {
     public Page<ProductDto> findAll(Pageable pageable) {
         var products = productRepository.findAll(pageable);
         return ProductMapper.fromEntityListToDtoList(products);
+    }
+
+    @Override
+    public ProductDto insert(ProductDto dto) {
+        var product = ProductMapper.fromDtoToEntity(dto);
+        return ProductMapper.fromEntityToDto(productRepository.save(product));
     }
 
     private Product findProductByIdOrThrow(Integer id) {
