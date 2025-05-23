@@ -13,4 +13,6 @@ public interface ProductService {
     ProductDto insert(ProductDto dto);
 
     ProductDto update(Integer id, ProductDto dto);
+
+    void delete(Integer id);
 }

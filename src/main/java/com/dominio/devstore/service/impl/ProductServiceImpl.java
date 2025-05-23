@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import com.dominio.devstore.mapper.ProductMapper;
 import com.dominio.devstore.service.ProductService;
+import com.dominio.devstore.exceptions.DatabaseException;
 import com.dominio.devstore.repositories.ProductRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import com.dominio.devstore.exceptions.ResourceNotFoundException;
 
@@ -47,12 +49,21 @@ public class ProductServiceImpl implements ProductService {
         return ProductMapper.fromEntityToDto(productRepository.save(product));
     }
 
+    @Override
+    public void delete(Integer id) {
+        var product = findProductByIdOrThrow(id);
+        try {
+            productRepository.deleteById(id);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DatabaseException("Integrity violation fail");
+        }
+    }
+
     private Product findProductByIdOrThrow(Integer id) {
         if (id == null)
             throw new IllegalArgumentException("Product id must not be null");
         if (id <= 0)
             throw new IllegalArgumentException("Product id must be greater than zero");
-
         return productRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("Product id: " + id + " not found")
         );
