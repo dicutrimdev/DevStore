@@ -3,6 +3,9 @@ package com.dominio.devstore.entities;
 import lombok.*;
 import jakarta.persistence.*;
 
+import java.util.Set;
+import java.util.HashSet;
+
 @Getter
 @Setter
 @Builder
@@ -17,4 +20,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+
+    @Setter(AccessLevel.NONE)
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
 }
