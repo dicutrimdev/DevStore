@@ -1,4 +1,4 @@
-package com.dominio.devstore.service;
+package com.dominio.devstore.services;
 
 import com.dominio.devstore.dto.ProductDto;
 import org.springframework.data.domain.Page;

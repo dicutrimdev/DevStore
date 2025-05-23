@@ -1,4 +1,4 @@
-package com.dominio.devstore.service.impl;
+package com.dominio.devstore.services.impl;
 
 import lombok.RequiredArgsConstructor;
 import com.dominio.devstore.dto.ProductDto;
@@ -7,7 +7,7 @@ import com.dominio.devstore.entities.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import com.dominio.devstore.mapper.ProductMapper;
-import com.dominio.devstore.service.ProductService;
+import com.dominio.devstore.services.ProductService;
 import com.dominio.devstore.exceptions.DatabaseException;
 import com.dominio.devstore.repositories.ProductRepository;
 import org.springframework.dao.DataIntegrityViolationException;
