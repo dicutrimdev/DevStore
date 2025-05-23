@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ import java.util.HashSet;
 
 @Entity
 @Table(name = "TB_CATEGORY")
-public class Category {
+public class Category implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 import com.dominio.devstore.entities.pk.OrderItemPk;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "TB_ORDER_ITEM")
-public class OrderItem {
+public class OrderItem implements Serializable {
     @EmbeddedId
     private OrderItemPk id = new OrderItemPk();
     private BigDecimal price;

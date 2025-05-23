@@ -4,8 +4,10 @@ import lombok.*;
 import jakarta.persistence.*;
 
 import java.util.Set;
+import java.util.List;
 import java.util.HashSet;
 import java.math.BigDecimal;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -16,7 +18,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "TB_PRODUCT")
-public class Product {
+public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,4 +35,12 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "id.product")
+    private Set<OrderItem> items = new HashSet<>();
+
+    public List<Order> getOrders() {
+        return items.stream().map(OrderItem::getOrder).toList();
+    }
 }
