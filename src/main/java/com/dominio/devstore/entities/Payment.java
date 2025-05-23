@@ -1,11 +1,9 @@
 package com.dominio.devstore.entities;
 
-import com.dominio.devstore.entities.enums.OrderStatus;
-
-import java.time.Instant;
-
 import lombok.*;
 import jakarta.persistence.*;
+
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -15,20 +13,16 @@ import jakarta.persistence.*;
 @EqualsAndHashCode(of = "id")
 
 @Entity
-@Table(name = "TB_ORDER")
-public class Order {
+@Table(name = "TB_PAYMENT")
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant moment;
-    private OrderStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
-    private Payment payment;
+    @MapsId
+    @OneToOne
+    private Order order;
 }
