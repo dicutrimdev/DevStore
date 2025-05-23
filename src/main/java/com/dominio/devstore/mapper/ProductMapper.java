@@ -1,6 +1,7 @@
 package com.dominio.devstore.mapper;
 
 import com.dominio.devstore.dto.ProductDto;
+import org.springframework.data.domain.Page;
 import com.dominio.devstore.entities.Product;
 
 public class ProductMapper {
@@ -13,5 +14,9 @@ public class ProductMapper {
                 .price(product.getPrice())
                 .img_url(product.getImg_url())
                 .build();
+    }
+
+    public static Page<ProductDto> fromEntityListToDtoList(Page<Product> products) {
+        return products.map(ProductMapper::fromEntityToDto);
     }
 }
