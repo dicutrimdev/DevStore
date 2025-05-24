@@ -26,6 +26,17 @@ public class ExceptionHandlerResources {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customErrorAttributes);
     }
 
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<CustomErrorAttributes> usernameNotFoundException(UsernameNotFoundException ex, HttpServletRequest request) {
+        var customErrorAttributes = new CustomErrorAttributes(
+                Instant.now(),
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customErrorAttributes);
+    }
+
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<CustomErrorAttributes> databaseException(DatabaseException ex, HttpServletRequest request) {
         var customErrorAttributes = new CustomErrorAttributes(
