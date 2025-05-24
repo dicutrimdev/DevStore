@@ -2,6 +2,7 @@ package com.dominio.devstore.entities;
 
 import lombok.*;
 import jakarta.persistence.*;
+import com.dominio.devstore.entities.enums.UserRole;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -26,6 +27,9 @@ public class User implements Serializable {
     private String email;
     private String password;
     private Integer birth_date;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "user")

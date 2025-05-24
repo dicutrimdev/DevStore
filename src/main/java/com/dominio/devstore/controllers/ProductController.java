@@ -1,5 +1,6 @@
 package com.dominio.devstore.controllers;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import com.dominio.devstore.dto.ProductDto;
@@ -33,16 +34,16 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto dto) {
+    public ResponseEntity<ProductDto> insert(@Valid @RequestBody ProductDto dto) {
         var productDto = productService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
+                .buildAndExpand(productDto.getId()).toUri();
         return ResponseEntity.created(uri).body(productDto);
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductDto> update(@PathVariable Integer id,
-                                             @RequestBody ProductDto dto) {
+                                             @Valid @RequestBody ProductDto dto) {
         var updatedProduct = productService.update(id, dto);
         return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
     }
