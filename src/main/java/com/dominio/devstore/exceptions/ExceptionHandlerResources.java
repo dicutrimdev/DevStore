@@ -37,6 +37,17 @@ public class ExceptionHandlerResources {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(customErrorAttributes);
     }
 
+    @ExceptionHandler(EmailAlreadyUsedException.class)
+    public ResponseEntity<CustomErrorAttributes> emailAlreadyUsedException(EmailAlreadyUsedException ex, HttpServletRequest request) {
+        var customErrorAttributes = new CustomErrorAttributes(
+                Instant.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(customErrorAttributes);
+    }
+
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<CustomErrorAttributes> databaseException(DatabaseException ex, HttpServletRequest request) {
         var customErrorAttributes = new CustomErrorAttributes(

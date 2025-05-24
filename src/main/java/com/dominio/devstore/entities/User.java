@@ -4,6 +4,7 @@ import lombok.*;
 import jakarta.persistence.*;
 import com.dominio.devstore.entities.enums.UserRole;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.io.Serializable;
@@ -26,7 +27,7 @@ public class User implements Serializable {
     @Column(unique = true)
     private String email;
     private String password;
-    private Integer birth_date;
+    private LocalDate birthDate;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
