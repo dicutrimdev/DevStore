@@ -16,6 +16,28 @@ import java.time.Instant;
 @ControllerAdvice
 public class ExceptionHandlerResources {
 
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<CustomErrorAttributes> invalidTokenException(InvalidTokenException ex, HttpServletRequest request) {
+        var customErrorAttributes = new CustomErrorAttributes(
+                Instant.now(),
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(customErrorAttributes);
+    }
+
+    @ExceptionHandler(TokenGenerationException.class)
+    public ResponseEntity<CustomErrorAttributes> tokenGenerationException(TokenGenerationException ex, HttpServletRequest request) {
+        var customErrorAttributes = new CustomErrorAttributes(
+                Instant.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ex.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(customErrorAttributes);
+    }
+
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<CustomErrorAttributes> badCredentialsException(BadCredentialsException ex, HttpServletRequest request) {
         var customErrorAttributes = new CustomErrorAttributes(
