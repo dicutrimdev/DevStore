@@ -22,13 +22,13 @@ public class RegisterServiceImpl implements RegisterService {
     @Override
     @Transactional
     public ResponseRegisteredUser register(RequestRegisterUser request) {
-        if (userRepository.findByEmail(request.email()).isPresent())
+        if (userRepository.findByUsername(request.email()).isPresent())
             throw new EmailAlreadyUsedException("Email already registered: " + request.email());
 
         var user = UserMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         var savedUser = userRepository.save(user);
-        return new ResponseRegisteredUser(savedUser.getId(), savedUser.getName());
+        return new ResponseRegisteredUser(savedUser.getId(), savedUser.getUsername(), savedUser.getRole());
     }
 }

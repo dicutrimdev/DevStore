@@ -1,6 +1,7 @@
 package com.dominio.devstore.entities;
 
-import lombok.RequiredArgsConstructor;
+import lombok.*;
+import jakarta.persistence.*;
 import com.dominio.devstore.entities.enums.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,14 +10,26 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import java.util.List;
 import java.util.Collection;
 
+@Data
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
-public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+@Entity
+@Table(name = "TB_USER_CREDENTIALS")
+public class UserCredentials implements UserDetails {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String username;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (user.getRole() == UserRole.ADMIN)
+        if (this.role == UserRole.ADMIN)
             return List.of(
                     new SimpleGrantedAuthority("ROLE_ADMIN"),
                     new SimpleGrantedAuthority("ROLE_USER"));
@@ -25,12 +38,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return this.password;
     }
 
     @Override
     public String getUsername() {
-        return user.getEmail();
+        return this.username;
     }
 
     @Override

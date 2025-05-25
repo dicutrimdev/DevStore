@@ -1,10 +1,10 @@
 package com.dominio.devstore.services;
 
-import com.dominio.devstore.entities.CustomUserDetails;
+import com.dominio.devstore.entities.UserCredentials;
 
 public interface TokenService {
 
-    String generateToken(CustomUserDetails customUserDetails);
+    String generateToken(UserCredentials userCredentials);
 
     String validateToken(String token);
 }

@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import org.springframework.stereotype.Service;
 import com.dominio.devstore.services.TokenService;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.dominio.devstore.entities.CustomUserDetails;
+import com.dominio.devstore.entities.UserCredentials;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import org.springframework.beans.factory.annotation.Value;
 import com.dominio.devstore.exceptions.InvalidTokenException;
@@ -22,13 +22,12 @@ public class TokenServiceImpl implements TokenService {
     private String secret;
 
     @Override
-    public String generateToken(CustomUserDetails customUserDetails) {
+    public String generateToken(UserCredentials userCredentials) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("DevStore API")
-                    .withSubject(customUserDetails.getUsername())
-                    .withClaim("role", customUserDetails.getAuthorities().toString())
+                    .withSubject(userCredentials.getUsername())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {
@@ -47,6 +46,6 @@ public class TokenServiceImpl implements TokenService {
     }
 
     private Instant generateExpirationDate() {
-        return LocalDateTime.now().plusHours(1).toInstant(ZoneOffset.UTC);
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }
