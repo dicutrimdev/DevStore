@@ -4,16 +4,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.dominio.devstore.mapper.UserMapper;
 import com.dominio.devstore.dto.RequestRegisterUser;
+import com.dominio.devstore.services.RegisterService;
 import com.dominio.devstore.dto.ResponseRegisteredUser;
 import com.dominio.devstore.repositories.UserRepository;
-import com.dominio.devstore.services.AuthenticationService;
 import org.springframework.transaction.annotation.Transactional;
 import com.dominio.devstore.exceptions.EmailAlreadyUsedException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class RegisterServiceImpl implements RegisterService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

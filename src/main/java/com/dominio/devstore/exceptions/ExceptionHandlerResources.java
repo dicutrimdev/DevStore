@@ -9,11 +9,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import com.dominio.devstore.dto.error.CustomErrorAttributesValidation;
+import org.springframework.security.authentication.BadCredentialsException;
 
 import java.time.Instant;
 
 @ControllerAdvice
 public class ExceptionHandlerResources {
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<CustomErrorAttributes> badCredentialsException(BadCredentialsException ex, HttpServletRequest request) {
+        var customErrorAttributes = new CustomErrorAttributes(
+                Instant.now(),
+                HttpStatus.UNAUTHORIZED.value(),
+                "Email ou senha inválidos",
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(customErrorAttributes);
+    }
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<CustomErrorAttributes> resourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
