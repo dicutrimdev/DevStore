@@ -1,5 +1,6 @@
 package com.dominio.devstore.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,7 @@ public class ProductDto {
 
     private Integer id;
 
+    @JsonProperty("title")
     @NotBlank(message = "Product name is required")
     @Size(min = 2, max = 100, message = "Product name must be between 2 and 100 characters")
     private String name;
@@ -29,6 +31,7 @@ public class ProductDto {
     @DecimalMin(value = "0.01", inclusive = true, message = "Price must be greater than 0")
     private BigDecimal price;
 
+    @JsonProperty("image")
     @NotBlank(message = "Image URL is required")
     @Size(max = 255, message = "Image URL must be at most 255 characters")
     private String img_url;

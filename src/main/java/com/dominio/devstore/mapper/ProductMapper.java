@@ -4,6 +4,8 @@ import com.dominio.devstore.dto.ProductDto;
 import org.springframework.data.domain.Page;
 import com.dominio.devstore.entities.Product;
 
+import java.util.List;
+
 public class ProductMapper {
 
     public static ProductDto fromEntityToDto(Product product) {
@@ -42,5 +44,9 @@ public class ProductMapper {
 
     public static Page<ProductDto> fromEntityListToDtoList(Page<Product> products) {
         return products.map(ProductMapper::fromEntityToDto);
+    }
+
+    public static List<Product> toListProduct(List<ProductDto> productDtoList) {
+        return productDtoList.stream().map(ProductMapper::fromDtoToEntity).toList();
     }
 }

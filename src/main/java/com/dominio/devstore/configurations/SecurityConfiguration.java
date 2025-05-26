@@ -51,6 +51,8 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/users/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/api/products/import").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
