@@ -27,6 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
+
     @Override
     @Transactional(readOnly = true)
     public EntityModel<ProductDto> findById(Integer id) {
@@ -35,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
         return EntityModel.of(productDto).add(linkTo(methodOn(ProductController.class)
                 .findAll(null)).withRel("Find All"));
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -48,6 +50,7 @@ public class ProductServiceImpl implements ProductService {
         });
     }
 
+
     @Override
     @Transactional
     public EntityModel<ProductDto> insert(ProductDto dto) {
@@ -60,6 +63,7 @@ public class ProductServiceImpl implements ProductService {
                 .add(linkTo(methodOn(ProductController.class).findById(productDto.getId())).withRel("Find By Id"));
     }
 
+
     @Override
     @Transactional
     public EntityModel<ProductDto> update(Integer id, ProductDto dto) {
@@ -70,6 +74,7 @@ public class ProductServiceImpl implements ProductService {
         return EntityModel.of(atualizedProductDto).add(linkTo(methodOn(ProductController.class)
                 .findById(atualizedProductDto.getId())).withRel("Find By Id"));
     }
+
 
     @Override
     public EntityModel<?> delete(Integer id) {
@@ -85,6 +90,7 @@ public class ProductServiceImpl implements ProductService {
         return EntityModel.of(response).add(linkTo(methodOn(ProductController.class)
                 .findAll(null)).withRel("Find All"));
     }
+
 
     private Product findProductByIdOrThrow(Integer id) {
         if (id == null)

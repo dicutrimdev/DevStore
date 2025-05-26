@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.ResponseEntity;
 import com.dominio.devstore.dto.LoginRequestDto;
 import com.dominio.devstore.dto.LoginResponseDto;
@@ -29,7 +30,7 @@ public class LoginController {
             @ApiResponse(responseCode = "200", description = "Login realizado com sucesso"),
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     })
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request) {
+    public ResponseEntity<EntityModel<LoginResponseDto>> login(@RequestBody LoginRequestDto request) {
         return ResponseEntity.status(HttpStatus.OK).body(loginService.login(request));
     }
 }
