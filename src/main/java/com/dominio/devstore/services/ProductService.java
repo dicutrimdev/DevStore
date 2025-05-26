@@ -11,9 +11,9 @@ public interface ProductService {
 
     Page<EntityModel<ProductDto>> findAll(Pageable pageable);
 
-    ProductDto insert(ProductDto dto);
+    EntityModel<ProductDto> insert(ProductDto dto);
 
-    ProductDto update(Integer id, ProductDto dto);
+    EntityModel<ProductDto> update(Integer id, ProductDto dto);
 
-    void delete(Integer id);
+    EntityModel<?> delete(Integer id);
 }
