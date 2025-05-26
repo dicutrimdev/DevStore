@@ -1,9 +1,11 @@
 package com.dominio.devstore.services.impl;
 
+import com.dominio.devstore.controllers.ProductController;
 import lombok.RequiredArgsConstructor;
 import com.dominio.devstore.dto.ProductDto;
 import org.springframework.data.domain.Page;
 import com.dominio.devstore.entities.Product;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import com.dominio.devstore.mapper.ProductMapper;
@@ -14,6 +16,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import com.dominio.devstore.exceptions.ResourceNotFoundException;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -22,16 +27,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public ProductDto findById(Integer id) {
+    public EntityModel<ProductDto> findById(Integer id) {
         var product = findProductByIdOrThrow(id);
-        return ProductMapper.fromEntityToDto(product);
+        var productDto = ProductMapper.fromEntityToDto(product);
+        return EntityModel.of(productDto).add(linkTo(methodOn(ProductController.class)
+                .findAll(null)).withRel("Find All"));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductDto> findAll(Pageable pageable) {
-        var products = productRepository.findAll(pageable);
-        return ProductMapper.fromEntityListToDtoList(products);
+    public Page<EntityModel<ProductDto>> findAll(Pageable pageable) {
+        Page<Product> products = productRepository.findAll(pageable);
+        return products.map(product -> {
+            ProductDto dto = ProductMapper.fromEntityToDto(product);
+            return EntityModel.of(dto, linkTo(methodOn(ProductController.class)
+                    .findById(dto.getId())).withSelfRel()
+            );
+        });
     }
 
     @Override

@@ -3,12 +3,13 @@ package com.dominio.devstore.services;
 import com.dominio.devstore.dto.ProductDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.EntityModel;
 
 public interface ProductService {
 
-    ProductDto findById(Integer id);
+    EntityModel<ProductDto> findById(Integer id);
 
-    Page<ProductDto> findAll(Pageable pageable);
+    Page<EntityModel<ProductDto>> findAll(Pageable pageable);
 
     ProductDto insert(ProductDto dto);
 

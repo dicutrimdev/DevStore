@@ -1,11 +1,11 @@
 package com.dominio.devstore.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.DecimalMin;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
