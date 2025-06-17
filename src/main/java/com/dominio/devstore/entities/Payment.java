@@ -1,5 +1,6 @@
 package com.dominio.devstore.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import jakarta.persistence.*;
 
@@ -20,7 +21,9 @@ public class Payment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss",
+            shape = JsonFormat.Shape.STRING,
+            timezone = "GMT")
     private Instant moment;
 
     @MapsId
