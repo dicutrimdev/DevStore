@@ -18,6 +18,7 @@ O principal objetivo da DevStore é fornecer uma **API REST simples e eficiente*
   - Spring HATEOAS
 - **H2 (para testes de persistência)**
 - **MySQL**
+- **PostgreSQL**
 - **Lombok**
 - **RestTemplate**
 - **Hibernate Validator**
@@ -55,6 +56,15 @@ A aplicação realiza a **importação de produtos** a partir de uma **FakeAPI**
 
 ---
 
+## 🐳 Configuração do Ambiente com Docker
+Para facilitar a execução do banco de dados PostgreSQL e da ferramenta de administração pgAdmin, o projeto utiliza o **Docker Compose**.
+### Como subir os serviços:
+Na raiz do projeto, onde está o arquivo `docker-compose.yml`, execute:
+```bash
+docker-compose up -d
+```
+---
+
 ## 📁 Estrutura do Projeto
 
 - **`src/`**
@@ -72,9 +82,9 @@ A aplicação realiza a **importação de produtos** a partir de uma **FakeAPI**
         - **`services/`** — Regras de negócio e lógica da aplicação
         - **`DevstoreApplication.java`** — Classe principal da aplicação (Spring Boot)
     - **`resources/`**
-      - **`application.properties`** — Configurações da aplicação
+      - **`application.yaml`** — Configurações da aplicação
 
-
+- **`DevStore.postman_collection.json`** — Arquivo com os endpoints da aplicação
 - **`pom.xml`** — Arquivo de configuração do Maven
 - **`README.md`** — Documentação do projeto
 
